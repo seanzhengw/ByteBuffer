@@ -1,12 +1,14 @@
 #ifndef BYTEBUFFER_READABLEBYTEBUFFER_H_
 #define BYTEBUFFER_READABLEBYTEBUFFER_H_
 
-#include <stddef.h>
 #include <stdint.h>
+#include "ByteBufferBase.h"
 
 // ReadableByteBuffer is a stream-like read interface for byte array.
 class ReadableByteBuffer
 {
+    using size_type = ByteBufferBase::size_type;
+
 public:
     virtual ~ReadableByteBuffer(){};
 
@@ -14,11 +16,11 @@ public:
     virtual void Rewind() = 0;
 
     // Return readable bytes count
-    virtual size_t Remaining() = 0;
+    virtual size_type Remaining() = 0;
     // Read one byte from this buffer
     virtual uint8_t Read() = 0;
     // Read bytes from this buffer
-    virtual void Read(void *buf, size_t size) = 0;
+    virtual void Read(void *buf, size_type size) = 0;
 };
 
 #endif

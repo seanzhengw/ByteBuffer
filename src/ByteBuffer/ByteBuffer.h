@@ -1,6 +1,7 @@
 #ifndef BYTEBUFFER_BYTEBUFFER_H_
 #define BYTEBUFFER_BYTEBUFFER_H_
 
+#include "ByteBufferBase.h"
 #include "ReadableByteBuffer.h"
 #include "WritableByteBuffer.h"
 #include <string.h>
@@ -9,9 +10,11 @@
 // use array with stream-like read/write interface.
 class ByteBuffer : public ReadableByteBuffer, WritableByteBuffer
 {
+    using size_type = ByteBufferBase::size_type;
+
 public:
     // Initialize with buffer size
-    ByteBuffer(size_t size = 64);
+    ByteBuffer(size_type size = 64);
     // Copy another ByteBuffer
     ByteBuffer(const ByteBuffer &b);
     // Copy another ByteBuffer, this discard current datas
@@ -23,29 +26,29 @@ public:
     // if new size is smaller than current, over sized datas would discard.
     // if new size is smaller than current read/write position,
     // read/write position would set to new size. (means reach buffer end)
-    void Resize(size_t size);
+    void Resize(size_type size);
     // Compacts this buffer,
     // put unread bytes to the buffer head, make more writable spaces.
     void Compact();
     // Reset everything of this buffer
     void Reset();
     // Return write position
-    size_t GetWritePos();
+    size_type GetWritePos();
     // Return read position
-    size_t GetReadPos();
+    size_type GetReadPos();
     // Return buffer size
-    size_t GetSize();
+    size_type GetSize();
 
-    virtual size_t Writable() override;
+    virtual size_type Writable() override;
     virtual void Write(uint8_t b) override;
-    virtual void Write(const uint8_t *bytes, size_t size) override;
+    virtual void Write(const uint8_t *bytes, size_type size) override;
     virtual void Write(const char *str) override;
-    virtual void Write(const char *str, size_t size) override;
+    virtual void Write(const char *str, size_type size) override;
 
     virtual void Rewind() override;
-    virtual size_t Remaining() override;
+    virtual size_type Remaining() override;
     virtual uint8_t Read() override;
-    virtual void Read(void *buf, size_t size) override;
+    virtual void Read(void *buf, size_type size) override;
 
     // Return a null-terminated string from readable bytes
     const char *CString();
@@ -58,16 +61,16 @@ public:
 
 private:
     // Buffer size
-    size_t mSize;
+    size_type mSize;
     // write position
-    size_t mWrites;
+    size_type mWrites;
     // Read position
-    size_t mReads;
+    size_type mReads;
     // Buffer
     uint8_t *mBuf;
 };
 
-inline ByteBuffer::ByteBuffer(size_t size) : mSize(size), mWrites(0), mReads(0), mBuf(new uint8_t[size])
+inline ByteBuffer::ByteBuffer(size_type size) : mSize(size), mWrites(0), mReads(0), mBuf(new uint8_t[size])
 {
 }
 
@@ -92,7 +95,7 @@ inline ByteBuffer::~ByteBuffer()
     delete[] mBuf;
 }
 
-inline void ByteBuffer::Resize(size_t size)
+inline void ByteBuffer::Resize(size_type size)
 {
     uint8_t *buf = mBuf;
     mBuf = new uint8_t[size];
@@ -114,7 +117,7 @@ inline void ByteBuffer::Compact()
     {
         return;
     }
-    size_t size = Remaining();
+    size_type size = Remaining();
     memmove(mBuf, mBuf + mReads, size);
     mReads = 0;
     mWrites = size;
@@ -126,22 +129,22 @@ inline void ByteBuffer::Reset()
     mWrites = 0;
 }
 
-inline size_t ByteBuffer::GetWritePos()
+inline ByteBuffer::size_type ByteBuffer::GetWritePos()
 {
     return mWrites;
 }
 
-inline size_t ByteBuffer::GetReadPos()
+inline ByteBuffer::size_type ByteBuffer::GetReadPos()
 {
     return mReads;
 }
 
-inline size_t ByteBuffer::GetSize()
+inline ByteBuffer::size_type ByteBuffer::GetSize()
 {
     return mSize;
 }
 
-inline size_t ByteBuffer::Writable()
+inline ByteBuffer::size_type ByteBuffer::Writable()
 {
     return mSize - mWrites;
 }
@@ -155,7 +158,7 @@ inline void ByteBuffer::Write(uint8_t b)
     }
 }
 
-inline void ByteBuffer::Write(const uint8_t *bytes, size_t size)
+inline void ByteBuffer::Write(const uint8_t *bytes, size_type size)
 {
     if (Writable() >= size)
     {
@@ -169,12 +172,12 @@ inline void ByteBuffer::Write(const char *str)
     Write((uint8_t *)str, strlen(str));
 }
 
-inline void ByteBuffer::Write(const char *str, size_t size)
+inline void ByteBuffer::Write(const char *str, size_type size)
 {
     Write((const uint8_t *)str, size);
 }
 
-inline size_t ByteBuffer::Remaining()
+inline ByteBuffer::size_type ByteBuffer::Remaining()
 {
     return mWrites - mReads;
 }
@@ -191,9 +194,9 @@ inline uint8_t ByteBuffer::Read()
     }
 }
 
-inline void ByteBuffer::Read(void *buf, size_t size)
+inline void ByteBuffer::Read(void *buf, size_type size)
 {
-    size_t readsize = Remaining() >= size ? size : Remaining();
+    size_type readsize = Remaining() >= size ? size : Remaining();
     memcpy(buf, &mBuf[mReads], readsize);
     mReads += readsize;
 }
