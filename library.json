@@ -1,0 +1,21 @@
+{
+	"name": "ByteBuffer",
+	"keywords": "byte, buffer",
+	"description": "A ByteBuffer library",
+	"homepage": "",
+	"repository": {
+	  "type": "git",
+	  "url": "https://github.com/seanzhengw/ByteBuffer.git"
+	},
+	"version": "0.0.1",
+	"authors": {
+	  "name": "Sean Zheng",
+	  "email": "seanzhengw@gmail.com",
+	  "url": ""
+	},
+	"exclude": [
+	  "test"
+	],
+	"frameworks": "*",
+	"platforms": "*"
+  }
