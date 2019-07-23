@@ -3,6 +3,14 @@ ByteBuffer
 
 ByteBuffer provides a stream-like read/write interface for byte array.
 
+## Feature
+
+* Stream interface read/write ByteBuffer.
+* Passing ByteBuffer easily with it's own properties.
+* Copy ByteBuffer easily with a `=` operator.
+* DynamicByteBuffer for runtime resizable buffer.
+* StaticByteBuffer for compile time size buffer.
+
 ## Quickstart
 
     // create ByteBuffer with 64 bytes capacity.
@@ -27,3 +35,7 @@ ByteBuffer provides a stream-like read/write interface for byte array.
     buf.Read(byte_array2, 5);
 
 see [examples](example) for using ByteBuffer in Arduion platform.
+
+## Benchmark
+
+See [Benchmark.md](Benchmark.md) for details.
