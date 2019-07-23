@@ -8,7 +8,7 @@
 
 // ByteBuffer is a class for byte array operating,
 // use array with stream-like read/write interface.
-class ByteBuffer : public ReadableByteBuffer, WritableByteBuffer
+class ByteBuffer : public ReadableByteBuffer, public WritableByteBuffer
 {
     using size_type = ByteBufferBase::size_type;
 
