@@ -1,5 +1,5 @@
-#ifndef BYTEBUFFER_BYTEBUFFER_H_
-#define BYTEBUFFER_BYTEBUFFER_H_
+#ifndef BYTEBUFFER_DYNAMICBYTEBUFFER_H_
+#define BYTEBUFFER_DYNAMICBYTEBUFFER_H_
 
 #include "ByteBufferBase.h"
 #include "ReadableByteBuffer.h"
@@ -8,19 +8,19 @@
 
 // ByteBuffer is a class for byte array operating,
 // use array with stream-like read/write interface.
-class ByteBuffer : public ReadableByteBuffer, public WritableByteBuffer
+class DynamicByteBuffer : public ReadableByteBuffer, public WritableByteBuffer
 {
     using size_type = ByteBufferBase::size_type;
 
 public:
     // Initialize with buffer size
-    ByteBuffer(size_type size = 64);
+    DynamicByteBuffer(size_type size = 64);
     // Copy another ByteBuffer
-    ByteBuffer(const ByteBuffer &b);
+    DynamicByteBuffer(const DynamicByteBuffer &b);
     // Copy another ByteBuffer, this discard current datas
-    ByteBuffer &operator=(const ByteBuffer &b);
+    DynamicByteBuffer &operator=(const DynamicByteBuffer &b);
     // Destroy
-    ~ByteBuffer();
+    ~DynamicByteBuffer();
 
     // Resize this buffer,
     // if new size is smaller than current, over sized datas would discard.
@@ -70,16 +70,16 @@ private:
     uint8_t *mBuf;
 };
 
-inline ByteBuffer::ByteBuffer(size_type size) : mSize(size), mWrites(0), mReads(0), mBuf(new uint8_t[size])
+inline DynamicByteBuffer::DynamicByteBuffer(size_type size) : mSize(size), mWrites(0), mReads(0), mBuf(new uint8_t[size])
 {
 }
 
-inline ByteBuffer::ByteBuffer(const ByteBuffer &b) : mSize(b.mSize), mWrites(b.mWrites), mReads(b.mReads), mBuf(new uint8_t[b.mSize])
+inline DynamicByteBuffer::DynamicByteBuffer(const DynamicByteBuffer &b) : mSize(b.mSize), mWrites(b.mWrites), mReads(b.mReads), mBuf(new uint8_t[b.mSize])
 {
     memcpy(mBuf, b.mBuf, mWrites);
 }
 
-inline ByteBuffer &ByteBuffer::operator=(const ByteBuffer &b)
+inline DynamicByteBuffer &DynamicByteBuffer::operator=(const DynamicByteBuffer &b)
 {
     delete[] mBuf;
     mSize = b.mSize;
@@ -90,12 +90,12 @@ inline ByteBuffer &ByteBuffer::operator=(const ByteBuffer &b)
     return (*this);
 }
 
-inline ByteBuffer::~ByteBuffer()
+inline DynamicByteBuffer::~DynamicByteBuffer()
 {
     delete[] mBuf;
 }
 
-inline void ByteBuffer::Resize(size_type size)
+inline void DynamicByteBuffer::Resize(size_type size)
 {
     uint8_t *buf = mBuf;
     mBuf = new uint8_t[size];
@@ -106,12 +106,12 @@ inline void ByteBuffer::Resize(size_type size)
     delete[] buf;
 }
 
-inline void ByteBuffer::Rewind()
+inline void DynamicByteBuffer::Rewind()
 {
     mReads = 0;
 }
 
-inline void ByteBuffer::Compact()
+inline void DynamicByteBuffer::Compact()
 {
     if (mReads == 0)
     {
@@ -123,33 +123,33 @@ inline void ByteBuffer::Compact()
     mWrites = size;
 }
 
-inline void ByteBuffer::Reset()
+inline void DynamicByteBuffer::Reset()
 {
     mReads = 0;
     mWrites = 0;
 }
 
-inline ByteBuffer::size_type ByteBuffer::GetWritePos()
+inline DynamicByteBuffer::size_type DynamicByteBuffer::GetWritePos()
 {
     return mWrites;
 }
 
-inline ByteBuffer::size_type ByteBuffer::GetReadPos()
+inline DynamicByteBuffer::size_type DynamicByteBuffer::GetReadPos()
 {
     return mReads;
 }
 
-inline ByteBuffer::size_type ByteBuffer::GetSize()
+inline DynamicByteBuffer::size_type DynamicByteBuffer::GetSize()
 {
     return mSize;
 }
 
-inline ByteBuffer::size_type ByteBuffer::Writable()
+inline DynamicByteBuffer::size_type DynamicByteBuffer::Writable()
 {
     return mSize - mWrites;
 }
 
-inline void ByteBuffer::Write(uint8_t b)
+inline void DynamicByteBuffer::Write(uint8_t b)
 {
     if (mWrites < mSize)
     {
@@ -158,7 +158,7 @@ inline void ByteBuffer::Write(uint8_t b)
     }
 }
 
-inline void ByteBuffer::Write(const uint8_t *bytes, size_type size)
+inline void DynamicByteBuffer::Write(const uint8_t *bytes, size_type size)
 {
     if (Writable() >= size)
     {
@@ -167,22 +167,22 @@ inline void ByteBuffer::Write(const uint8_t *bytes, size_type size)
     }
 }
 
-inline void ByteBuffer::Write(const char *str)
+inline void DynamicByteBuffer::Write(const char *str)
 {
     Write((uint8_t *)str, strlen(str));
 }
 
-inline void ByteBuffer::Write(const char *str, size_type size)
+inline void DynamicByteBuffer::Write(const char *str, size_type size)
 {
     Write((const uint8_t *)str, size);
 }
 
-inline ByteBuffer::size_type ByteBuffer::Remaining()
+inline DynamicByteBuffer::size_type DynamicByteBuffer::Remaining()
 {
     return mWrites - mReads;
 }
 
-inline uint8_t ByteBuffer::Read()
+inline uint8_t DynamicByteBuffer::Read()
 {
     if (mWrites > mReads)
     {
@@ -194,14 +194,14 @@ inline uint8_t ByteBuffer::Read()
     }
 }
 
-inline void ByteBuffer::Read(void *buf, size_type size)
+inline void DynamicByteBuffer::Read(void *buf, size_type size)
 {
     size_type readsize = Remaining() >= size ? size : Remaining();
     memcpy(buf, &mBuf[mReads], readsize);
     mReads += readsize;
 }
 
-inline const char *ByteBuffer::CString()
+inline const char *DynamicByteBuffer::CString()
 {
     if (mWrites < mSize)
     {
@@ -210,17 +210,17 @@ inline const char *ByteBuffer::CString()
     return (const char *)(&mBuf[mReads]);
 }
 
-inline uint8_t *ByteBuffer::GetBuf()
+inline uint8_t *DynamicByteBuffer::GetBuf()
 {
     return mBuf;
 }
 
-inline uint8_t &ByteBuffer::operator[](unsigned int i)
+inline uint8_t &DynamicByteBuffer::operator[](unsigned int i)
 {
     return mBuf[i];
 }
 
-inline uint8_t ByteBuffer::operator[](unsigned int i) const
+inline uint8_t DynamicByteBuffer::operator[](unsigned int i) const
 {
     return mBuf[i];
 }
