@@ -24,7 +24,7 @@ public:
     // Copy another ByteBuffer, this overwrite current datas
     StaticByteBuffer &operator=(const StaticByteBuffer &b);
     // Destroy
-    ~StaticByteBuffer();
+    virtual ~StaticByteBuffer();
 
     // Compacts this buffer,
     // put unread bytes to the buffer head, make more writable spaces.

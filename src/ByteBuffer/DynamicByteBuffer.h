@@ -20,7 +20,7 @@ public:
     // Copy another ByteBuffer, this discard current datas
     DynamicByteBuffer &operator=(const DynamicByteBuffer &b);
     // Destroy
-    ~DynamicByteBuffer();
+    virtual ~DynamicByteBuffer();
 
     // Resize this buffer,
     // if new size is smaller than current, over sized datas would discard.
