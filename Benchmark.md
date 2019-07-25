@@ -71,6 +71,7 @@ to this
         unsigned int newlen = len + 1;
         if (!reserve(newlen)) return 0;
         buffer[len] = c;
+        buffer[newlen] = '\0';
         len = newlen;
         return 1;
     }
@@ -82,8 +83,8 @@ And test again
     Start Testing write 511 char into ''Local'' Array, Arduino String and Bytebuffer.
     Array Write ---------------------------- 684 us
     Array Write Avoid For loop Optimize ---- 1676 us
-    Arduino String += ---------------------- 2584 us
-    Arduino String concat ------------------ 2592 us
+    Arduino String += ---------------------- 2868 us
+    Arduino String concat ------------------ 2876 us
     DynamicByteBuffer write ---------------- 1684 us
     DynamicByteBuffer write and to String -- 1636 us
     StaticByteBuffer write ----------------- 1356 us
@@ -91,8 +92,8 @@ And test again
     Start Testing write 511 char into ''Global'' Array, Arduino String and Bytebuffer.
     Array Write ---------------------------- 584 us
     Array Write Avoid For loop Optimize ---- 1032 us
-    Arduino String += ---------------------- 2548 us
-    Arduino String concat ------------------ 2544 us
+    Arduino String += ---------------------- 2828 us
+    Arduino String concat ------------------ 2836 us
     DynamicByteBuffer write ---------------- 1644 us
     DynamicByteBuffer write and to String -- 1624 us
     StaticByteBuffer write ----------------- 1316 us
