@@ -206,6 +206,8 @@ inline const char *DynamicByteBuffer::CString()
     if (mWrites < mSize)
     {
         mBuf[mWrites] = 0;
+    } else {
+        mBuf[mSize - 1] = 0;
     }
     return (const char *)(&mBuf[mReads]);
 }
