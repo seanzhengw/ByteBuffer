@@ -1,10 +1,10 @@
 // The example of ReadableByteBuffer interface
 
-// include ByteBuffer.h
-#include <ByteBuffer/ByteBuffers.h>
+// include ByteBuffers.h
+#include <ByteBuffers.h>
 
 // Create ByteBuffer with buffer capacity 32 bytes
-ByteBuffer buf(32);
+DynamicByteBuffer buf(32);
 
 void this_function_will_not_write_anything(ReadableByteBuffer *bytebuf)
 {

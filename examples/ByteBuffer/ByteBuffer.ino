@@ -1,10 +1,10 @@
 // The example of ByteBuffer usage
 
 // include ByteBuffers.h
-#include <ByteBuffer/ByteBuffers.h>
+#include <ByteBuffers.h>
 
 // Create ByteBuffer with buffer capacity 32 bytes
-ByteBuffer buf(32);
+DynamicByteBuffer buf(32);
 
 void setup()
 {
@@ -181,8 +181,8 @@ void setup()
 
     // buffer copy
     Serial.println("copy buffer as buffer2.");
-    ByteBuffer buf2(buf);
-    // same as ByteBuffer buf2 = buf;
+    DynamicByteBuffer buf2(buf);
+    // same as DynamicByteBuffer buf2 = buf;
 
     // reset buffer
     buf.Reset();
@@ -208,7 +208,7 @@ void setup()
     
     // existing buffer copy another buffer
     Serial.println("create buffer3 with 32 bytes capacity.");
-    ByteBuffer buf3(32);
+    DynamicByteBuffer buf3(32);
     Serial.println("copy buffe2 to existing buffer3.");
     buf3 = buf2;
     

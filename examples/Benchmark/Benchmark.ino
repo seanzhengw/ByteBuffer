@@ -2,7 +2,7 @@
 // from some interfaces, and comapre the time usages of using native array,
 // Arduino String and ByteBuffer to store the incoming bytes.
 
-#include <ByteBuffer/ByteBuffers.h>
+#include <ByteBuffers.h>
 
 // incoming bytes amount
 const size_t TestSize = 512;

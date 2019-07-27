@@ -13,8 +13,8 @@ ByteBuffer provides a stream-like read/write interface for byte array.
 
 ## Quickstart
 
-    // create ByteBuffer with 64 bytes capacity.
-    ByteBuffer buf(64);
+    // create DynamicByteBuffer with 64 bytes capacity.
+    DynamicByteBuffer buf(64);
     
     // Write byte
     buf.Write('a');

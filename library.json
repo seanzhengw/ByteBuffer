@@ -23,6 +23,6 @@
     "frameworks": "*",
     "platforms": "*",
     "examples": [
-        "example/*/*.ino"
+        "examples/*/*.ino"
     ]
 }
