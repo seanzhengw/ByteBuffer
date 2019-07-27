@@ -38,6 +38,10 @@ public:
     size_type GetReadPos();
     // Return buffer size
     size_type GetSize();
+    // Set write position
+    void SetWritePos(size_type pos);
+    // Set read position
+    void SetReadPos(size_type pos);
 
     virtual size_type Writable() override;
     virtual void Write(uint8_t b) override;
@@ -142,6 +146,16 @@ inline DynamicByteBuffer::size_type DynamicByteBuffer::GetReadPos()
 inline DynamicByteBuffer::size_type DynamicByteBuffer::GetSize()
 {
     return mSize;
+}
+
+inline void DynamicByteBuffer::SetWritePos(size_type pos)
+{
+    mWrites = pos;
+}
+
+inline void DynamicByteBuffer::SetReadPos(size_type pos)
+{
+    mReads = pos;
 }
 
 inline DynamicByteBuffer::size_type DynamicByteBuffer::Writable()

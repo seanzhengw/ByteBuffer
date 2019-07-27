@@ -37,6 +37,10 @@ public:
     size_type GetReadPos();
     // Return buffer size
     size_type GetSize();
+    // Set write position
+    void SetWritePos(size_type pos);
+    // Set read position
+    void SetReadPos(size_type pos);
 
     virtual size_type Writable() override;
     virtual void Write(uint8_t b) override;
@@ -153,6 +157,18 @@ template <ByteBufferBase::size_type mSize>
 inline ByteBufferBase::size_type StaticByteBuffer<mSize>::GetSize()
 {
     return mSize;
+}
+
+template <ByteBufferBase::size_type mSize>
+inline void StaticByteBuffer<mSize>::SetWritePos(size_type pos)
+{
+    mWrites = pos;
+}
+
+template <ByteBufferBase::size_type mSize>
+inline void StaticByteBuffer<mSize>::SetReadPos(size_type pos)
+{
+    mReads = pos;
 }
 
 template <ByteBufferBase::size_type mSize>
