@@ -1,7 +1,7 @@
 // The example of WritableByteBuffer interface
 
 // include ByteBuffer.h
-#include <ByteBuffer.h>
+#include <ByteBuffer/ByteBuffers.h>
 
 // Create ByteBuffer with buffer capacity 32 bytes
 ByteBuffer buf(32);

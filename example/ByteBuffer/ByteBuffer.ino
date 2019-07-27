@@ -1,7 +1,7 @@
 // The example of ByteBuffer usage
 
-// include ByteBuffer.h
-#include <ByteBuffer.h>
+// include ByteBuffers.h
+#include <ByteBuffer/ByteBuffers.h>
 
 // Create ByteBuffer with buffer capacity 32 bytes
 ByteBuffer buf(32);
