@@ -21,11 +21,11 @@ ByteBuffer provides a stream-like read/write interface for byte array.
 
     // Write bytes, length 5.
     uint8_t byte_array[8] = {0, 1, 2, 3, 4, 5, 6, 7};
-    buf.write(byte_array, 5)
+    buf.Write(byte_array, 5)
 
     // Write string
     const char* c_str = "abc"
-    buf.writeStr(c_str);
+    buf.Write(c_str);
 
     // Read byte
     uint8_t b = buf.Read();
@@ -34,7 +34,7 @@ ByteBuffer provides a stream-like read/write interface for byte array.
     uint8_t byte_array2[5];
     buf.Read(byte_array2, 5);
 
-see [examples](example) for using ByteBuffer in Arduion platform.
+see [examples](examples) for using ByteBuffer in Arduino platform.
 
 ## Benchmark
 
