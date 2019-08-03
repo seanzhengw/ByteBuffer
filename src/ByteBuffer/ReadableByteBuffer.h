@@ -12,9 +12,6 @@ class ReadableByteBuffer
 public:
     virtual ~ReadableByteBuffer(){};
 
-    // Rewinds this buffer, read position set to zero.
-    virtual void Rewind() = 0;
-
     // Return readable bytes count
     virtual size_type Remaining() = 0;
     // Read one byte from this buffer
