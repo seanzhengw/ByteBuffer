@@ -1,10 +1,8 @@
 #ifndef BYTEBUFFER_STATICBYTEBUFFER_H_
 #define BYTEBUFFER_STATICBYTEBUFFER_H_
 
-#include "ByteBufferBase.h"
-#include "ReadableByteBuffer.h"
-#include "WritableByteBuffer.h"
 #include <string.h>
+#include "LinearByteBuffer.h"
 
 class StaticByteBufferHelper;
 
@@ -12,7 +10,7 @@ class StaticByteBufferHelper;
 // use array with stream-like read/write interface.
 // use template to set compile time buffer size.
 template <ByteBufferBase::size_type mSize>
-class StaticByteBuffer : public ReadableByteBuffer, public WritableByteBuffer
+class StaticByteBuffer : public LinearByteBuffer
 {
     using size_type = ByteBufferBase::size_type;
 
@@ -28,15 +26,15 @@ public:
 
     // Compacts this buffer,
     // put unread bytes to the buffer head, make more writable spaces.
-    void Compact();
+    virtual void Compact() override;
     // Reset everything of this buffer
-    void Reset();
+    virtual void Reset() override;
     // Return write position
     size_type GetWritePos();
     // Return read position
     size_type GetReadPos();
     // Return buffer size
-    size_type GetSize();
+    virtual size_type GetSize() override;
     // Set write position
     void SetWritePos(size_type pos);
     // Set read position

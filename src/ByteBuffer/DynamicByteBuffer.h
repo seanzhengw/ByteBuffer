@@ -1,14 +1,12 @@
 #ifndef BYTEBUFFER_DYNAMICBYTEBUFFER_H_
 #define BYTEBUFFER_DYNAMICBYTEBUFFER_H_
 
-#include "ByteBufferBase.h"
-#include "ReadableByteBuffer.h"
-#include "WritableByteBuffer.h"
 #include <string.h>
+#include "LinearByteBuffer.h"
 
 // ByteBuffer is a class for byte array operating,
 // use array with stream-like read/write interface.
-class DynamicByteBuffer : public ReadableByteBuffer, public WritableByteBuffer
+class DynamicByteBuffer : public LinearByteBuffer
 {
     using size_type = ByteBufferBase::size_type;
 
@@ -29,15 +27,15 @@ public:
     void Resize(size_type size);
     // Compacts this buffer,
     // put unread bytes to the buffer head, make more writable spaces.
-    void Compact();
+    virtual void Compact() override;
     // Reset everything of this buffer
-    void Reset();
+    virtual void Reset() override;
     // Return write position
     size_type GetWritePos();
     // Return read position
     size_type GetReadPos();
     // Return buffer size
-    size_type GetSize();
+    virtual size_type GetSize() override;
     // Set write position
     void SetWritePos(size_type pos);
     // Set read position
